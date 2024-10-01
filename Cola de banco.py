@@ -1,8 +1,16 @@
+import math
+import random
+def tiempoEntreClientes(lambdaCliente):
+    return -1*(1/lambdaCliente)*math.log(1-random.uniform(0.99998, 1))
+
+def tiempoAtencionServidor(lambdaServidor):
+    return -1*(1/lambdaServidor)*math.log(1-random.uniform(0.99998, 1))
+    
 def llegadaClientes(clientes, time, arrive):
-    x = arrive
+    x = tiempoEntreClientes(arrive)
     while x <= time*60:
         clientes.append(x)
-        x += arrive
+        x += tiempoEntreClientes(arrive)
 
 def trabajar(clientes, aten, lisservidor, lisgoso, clientesaten): 
     servidor = lisservidor[0]
@@ -11,13 +19,13 @@ def trabajar(clientes, aten, lisservidor, lisgoso, clientesaten):
         if servidor-i < 0: 
             goso += (servidor-i)*-1
             clientesaten.append(i)
-            servidor += aten + ((servidor-i)*-1)
+            servidor += tiempoAtencionServidor(aten) + ((servidor-i)*-1)
         elif servidor-i > 0 : 
             clientesaten.append(servidor)
-            servidor += aten
+            servidor += tiempoAtencionServidor(aten)
         else: 
             clientesaten.append(i)
-            servidor += aten
+            servidor += tiempoAtencionServidor(aten)
     lisgoso[0] = goso
     lisservidor[0] = servidor
 
@@ -47,7 +55,6 @@ for i in range(len(clientes)):
 print("tiempo total del servidor " + str(servidor))
 
 print("Tiempo total de goso "  + str(goso))
-
 
 
 
