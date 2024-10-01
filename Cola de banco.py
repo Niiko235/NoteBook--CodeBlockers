@@ -1,5 +1,3 @@
-
-
 def llegadaClientes(clientes, time, arrive):
     x = arrive
     while x <= time*60:
